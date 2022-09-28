@@ -2,7 +2,6 @@ let button=document.querySelector('.btn')
 let username=document.querySelector('#user')
 let email=document.querySelector('#email')
 let phone=document.querySelector('#phoneNo')
-let users=[]
 let userObj={}
 button.addEventListener('click',(e)=>{
     e.preventDefault()
@@ -26,56 +25,26 @@ button.addEventListener('click',(e)=>{
     }
 })
 
-document.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('DOMContentLoaded',()=>{
+    axios.get('https://crudcrud.com/api/ba394bd12dfb4c2898a0810ab171e301/appointment')
+    .then((response)=>{
+        console.log(response.data)
+        var result=response.data
 
-    Object.keys(localStorage).forEach(function(key){
-        console.log(JSON.parse(localStorage.getItem(key)))
-       let userDetail=JSON.parse(localStorage.getItem(key))
-       users.push(userDetail)
-      
-      
-        
-        
-     });
- 
-     users.forEach((user)=>{
-        let usersList=document.querySelector('.user-detail')
+        result.forEach((res)=>{
+            displayUser(res)
+        })
 
-     let userLi=document.createElement('li')
-     userLi.id=`user${user.name}`
-     userLi.appendChild(document.createTextNode(`${user.name} ${user.email}`))
-     let deleteBtn=document.createElement('button')
-     deleteBtn.onclick=function(){
-        localStorage.removeItem(`user${user.name}`)
-        let ulList=document.querySelector('.user-detail')
-        let liToDelete=document.getElementById(`user${user.name}`)
-        console.log(liToDelete)
-        ulList.removeChild(liToDelete)
-     }
-
-   deleteBtn.appendChild(document.createTextNode('Delete'))
-   let editBtn=document.createElement('button')
-   editBtn.appendChild(document.createTextNode('Edit'))
-   userLi.appendChild(deleteBtn)
-   userLi.appendChild(editBtn)
-
-     usersList.appendChild(userLi)
-})
+    }).catch((err)=>{
+        console.log(err)
+    })
 
  })
-function displayUser(useObj){
-  
-     if(localStorage.getItem(`user${userObj.name}`) !==null){
-     }
-   
-
-         let userList=document.querySelector('.user-detail')
-         let userTag=`<li id='user${userObj.name}'> ${userObj.name} ${userObj.email} <button onClick=deleteUser('user${userObj.name}')>Delete User</button></li> `
+function displayUser(res){
+        let userList=document.querySelector('.user-detail')
+         let userTag=`<li id='user${res.name}'> ${res.name} ${res.email}- ${res.phoneNumber} <button>Delete User</button></li> `
          userList.innerHTML= userList.innerHTML + userTag 
         
-        
-     
- 
 }
 
 
