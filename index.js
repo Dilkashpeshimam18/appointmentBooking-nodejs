@@ -14,11 +14,10 @@ button.addEventListener('click',(e)=>{
             phoneNumber:phone.value
         }
 
-        axios.post('https://crudcrud.com/api/ba394bd12dfb4c2898a0810ab171e301/appointment', userObj)
+        axios.post('https://crudcrud.com/api/5efde826cb4048f281e4b2a5a8df66d4/appointmentBooking', userObj)
         .then((response)=>{
             displayUser(response.data)      
 
-            console.log(response)
         })
         .catch((err)=>console.log(err))
 
@@ -26,7 +25,8 @@ button.addEventListener('click',(e)=>{
 })
 
 window.addEventListener('DOMContentLoaded',()=>{
-    axios.get('https://crudcrud.com/api/ba394bd12dfb4c2898a0810ab171e301/appointment')
+
+    axios.get('https://crudcrud.com/api/5efde826cb4048f281e4b2a5a8df66d4/appointmentBooking')
     .then((response)=>{
         console.log(response.data)
         var result=response.data
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded',()=>{
  })
 function displayUser(res){
         let userList=document.querySelector('.user-detail')
-         let userTag=`<li id='user${res.name}'> ${res.name} ${res.email}- ${res.phoneNumber} <button>Delete User</button></li> `
+         let userTag=`<li id='${res._id}'> ${res.name} ${res.email}- ${res.phoneNumber} <button onClick=deleteUser('${res._id}')>Delete User</button></li> `
          userList.innerHTML= userList.innerHTML + userTag 
         
 }
@@ -51,10 +51,16 @@ function displayUser(res){
 
 
 
-function deleteUser(userName){
-    console.log(userName)
-   localStorage.removeItem(userName)
+function deleteUser(id){
+    console.log(id)
+    axios.delete(`https://crudcrud.com/api/5efde826cb4048f281e4b2a5a8df66d4/appointmentBooking/${id}`)
+    .then((res)=>{
+        console.log('successful')
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
    let ulList=document.querySelector('.user-detail')
-   let liToDelete=document.getElementById(userName)
+   let liToDelete=document.getElementById(id)
    ulList.removeChild(liToDelete)
 }
