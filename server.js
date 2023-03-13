@@ -1,6 +1,7 @@
 const express=require('express')
 const bodyParser=require('body-parser')
 const cors=require('cors')
+const appRoute=require('./routes/app')
 
 const app=express()
 
@@ -8,10 +9,8 @@ const app=express()
 app.use(cors())
 app.use(bodyParser.json({extended:false}))
 
+app.use(appRoute)
 
-app.get('/',(req,res)=>{
-    res.send('Appointment Booking!')
-})
 
 app.listen(4000,()=>{
     console.log('Working!')
