@@ -1,11 +1,12 @@
 const express=require('express')
 const path=require('path')
+const homeController=require('../controllers/app')
+
 const router=express.Router()
 
 
-router.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../','views','index.html'))
+router.get('/',homeController.getHome)
 
-})
+router.post('/user/add-user',homeController.postUser)
 
 module.exports=router;
