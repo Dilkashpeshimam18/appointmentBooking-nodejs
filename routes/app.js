@@ -4,7 +4,7 @@ const router=express.Router()
 
 
 router.get('/',(req,res)=>{
-    res.send('Appointment Booking!')
+    res.sendFile(path.join(__dirname,'../','views','index.html'))
 
 })
 
