@@ -54,11 +54,11 @@ window.addEventListener('DOMContentLoaded',()=>{
     axios.get('http://localhost:4000/user/get-users')
     .then((response)=>{
         console.log(response)
-        // var result=response.data
+        var result=response.data.allUsers
 
-        // result.forEach((res)=>{
-        //     displayUser(res)
-        // })
+        result.forEach((res)=>{
+            displayUser(res)
+        })
 
     }).catch((err)=>{
         console.log(err)
@@ -67,7 +67,7 @@ window.addEventListener('DOMContentLoaded',()=>{
  })
 function displayUser(res){
         let userList=document.querySelector('.user-detail')
-         let userTag=`<li id='${res._id}'> ${res.name} ${res.email}- ${res.phoneNumber} <button onClick=editUser('${res._id}')>Edit User</button> <button onClick=deleteUser('${res._id}')>Delete User</button></li> `
+         let userTag=`<li id='${res._id}'> ${res.username} ${res.email}- ${res.phoneNumber} <button onClick=editUser('${res._id}')>Edit User</button> <button onClick=deleteUser('${res._id}')>Delete User</button></li> `
          userList.innerHTML= userList.innerHTML + userTag 
          username.value=''
          email.value=''
