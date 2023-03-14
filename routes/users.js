@@ -3,8 +3,8 @@ const appController=require('../controllers/app')
 
 const router=express.Router()
 
+router.get('/user/get-users',appController.getUsers)
 
-router.get('/',appController.getHome)
-
+router.post('/user/add-user',appController.postUser)
 
 module.exports=router;

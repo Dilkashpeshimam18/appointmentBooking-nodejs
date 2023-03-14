@@ -5,6 +5,7 @@ let phone=document.querySelector('#phoneNo')
 let userObj={}
 let userId=''
 var edit=false
+
 button.addEventListener('click',(e)=>{
     e.preventDefault()
     if(username.value==='' || email.value==='' || !phone.value){
@@ -15,43 +16,49 @@ button.addEventListener('click',(e)=>{
             email:email.value,
             phoneNumber:phone.value
         }
-        if(edit==true){
-            axios.put(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${userId}`,userObj)
-            .then((response)=>{
-                axios.get(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${userId}`)
-                .then((res)=>{
-                    let ulList=document.querySelector('.user-detail')
-                    let liToDelete=document.getElementById(res.data._id)
-                    ulList.removeChild(liToDelete)
-                    displayUser(res.data)
-                })
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+        // if(edit==true){
+        //     axios.put(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${userId}`,userObj)
+        //     .then((response)=>{
+        //         axios.get(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${userId}`)
+        //         .then((res)=>{
+        //             let ulList=document.querySelector('.user-detail')
+        //             let liToDelete=document.getElementById(res.data._id)
+        //             ulList.removeChild(liToDelete)
+        //             displayUser(res.data)
+        //         })
+        //     })
+        //     .catch((err)=>{
+        //         console.log(err)
+        //     })
 
 
-        }else{
-            axios.post('https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking', userObj)
-            .then((response)=>{
-                displayUser(response.data)      
+        // }else{
+       
+
+        // }
+        axios.post('http://localhost:4000/user/add-user', userObj)
+        .then((res)=>{
+            console.log('Post request!!')
+            console.log(res)
+            // displayUser(response.data)      
     
-            })
-            .catch((err)=>console.log(err))
-
-        }
+        })
+        .catch((err)=>console.log(err))
     }
+ 
 })
 
 window.addEventListener('DOMContentLoaded',()=>{
+    console.log('Get request')
 
-    axios.get('https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking')
+    axios.get('http://localhost:4000/user/get-users')
     .then((response)=>{
-        var result=response.data
+        console.log(response)
+        // var result=response.data
 
-        result.forEach((res)=>{
-            displayUser(res)
-        })
+        // result.forEach((res)=>{
+        //     displayUser(res)
+        // })
 
     }).catch((err)=>{
         console.log(err)

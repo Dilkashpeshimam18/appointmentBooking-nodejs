@@ -1,8 +1,9 @@
 const express=require('express')
 const bodyParser=require('body-parser')
 const cors=require('cors')
-const appRoute=require('./routes/app')
-
+const appRoutes=require('./routes/app')
+const sequelize=require('./utils/db')
+const userRoutes=require('./routes/users')
 const app=express()
 
 //middleware
@@ -11,9 +12,10 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 
 
-app.use(appRoute)
+app.use(appRoutes)
+app.use(userRoutes)
 
+sequelize.sync().then((res)=>{
+    app.listen(4000);
 
-app.listen(4000,()=>{
-    console.log('Working!')
-})
+}).catch(err=>console.log(err))
