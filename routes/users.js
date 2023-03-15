@@ -1,13 +1,15 @@
 const express=require('express')
-const appController=require('../controllers/app')
+const usersController=require('../controllers/users')
 
 const router=express.Router()
 
-router.get('/user/get-users',appController.getUsers)
+router.get('/user/get-users',usersController.getUsers)
 
-router.post('/user/add-user',appController.postUser)
+router.post('/user/add-user',usersController.postUser)
 
-router.delete('/delete-user/:id',appController.deleteUser)
+router.delete('/delete-user/:id',usersController.deleteUser)
+
+router.get('/edit-user/:id')
 
 
 
