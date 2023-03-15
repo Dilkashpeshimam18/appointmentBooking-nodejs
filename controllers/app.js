@@ -1,5 +1,6 @@
 const Users=require('../models/users')
 const { randomUUID } = require('crypto');
+
 exports.getHome=(req,res)=>{
     // res.sendFile(path.join(__dirname,'../','views','index.html'))
     res.send('Appointment Booking Backend Server!')
@@ -38,4 +39,20 @@ exports.getUsers=async(req,res)=>{
         console.log(err)
     }
 
+}
+
+exports.deleteUser=async(req,res)=>{
+    try{
+        if(!req.params.id || req.params.id=='undefined'){
+            return res.status(400).json({err:'ID is missing'})
+        }
+        const userId=req.params.id
+       await Users.destroy({where:{id:userId}})
+
+        res.status(200).json({data:'User deleted'})
+  
+
+    }catch(err){
+        res.status(500).json(err)
+    }
 }

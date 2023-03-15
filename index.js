@@ -40,7 +40,8 @@ button.addEventListener('click',(e)=>{
         .then((res)=>{
             console.log('Post request!!')
             console.log(res)
-            // displayUser(response.data)      
+            const user=res.data.userDetail
+            displayUser(user)      
     
         })
         .catch((err)=>console.log(err))
@@ -67,7 +68,7 @@ window.addEventListener('DOMContentLoaded',()=>{
  })
 function displayUser(res){
         let userList=document.querySelector('.user-detail')
-         let userTag=`<li id='${res._id}'> ${res.username} ${res.email}- ${res.phoneNumber} <button onClick=editUser('${res._id}')>Edit User</button> <button onClick=deleteUser('${res._id}')>Delete User</button></li> `
+         let userTag=`<li id='${res.id}'> ${res.username} ${res.email}- ${res.phoneNumber} <button onClick=editUser('${res.id}')>Edit User</button> <button onClick=deleteUser('${res.id}')>Delete User</button></li> `
          userList.innerHTML= userList.innerHTML + userTag 
          username.value=''
          email.value=''
@@ -79,15 +80,15 @@ function displayUser(res){
 
 
 
-function deleteUser(id){
-    console.log(id)
-    axios.delete(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${id}`)
-    .then((res)=>{
-        console.log('successful')
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+const deleteUser=async(id)=>{
+    try{
+      const data= await axios.delete(`http://localhost:4000/delete-user/${id}`)
+      console.log('Delete data',data)
+
+    }catch(err){
+      console.log(err)
+    }
+   
    let ulList=document.querySelector('.user-detail')
    let liToDelete=document.getElementById(id)
    ulList.removeChild(liToDelete)
