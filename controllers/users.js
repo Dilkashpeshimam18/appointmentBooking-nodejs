@@ -52,11 +52,29 @@ exports.deleteUser=async(req,res)=>{
 exports.getEditUser=async(req,res)=>{
     try{
         const id=req.params.id
-        console.log(id)
         const data= await Users.findByPk(id)
 
         res.status(200).json({data:data})
 
+    }catch(err){
+        console.log(err)
+    }
+}
+
+exports.postEditUser=async(req,res)=>{
+    try{
+        const id=req.params.id
+       console.log(id)
+    //    console.log(req.body)
+
+      const data=await Users.findByPk(id)
+      data.username=req.body.username
+      data.email=req.body.email
+      data.phoneNumber=req.body.phoneNumber
+
+      data.save()
+      res.status(200).json({data})
+     
     }catch(err){
         console.log(err)
     }

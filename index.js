@@ -6,45 +6,45 @@ let userObj={}
 let userId=''
 var edit=false
 
-button.addEventListener('click',(e)=>{
+button.addEventListener('click',async(e)=>{
     e.preventDefault()
     if(username.value==='' || email.value==='' || !phone.value){
         alert('Please enter the value')
     }else{
         userObj={
-            name:username.value,
+            username:username.value,
             email:email.value,
             phoneNumber:phone.value
         }
-        // if(edit==true){
-        //     axios.put(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${userId}`,userObj)
-        //     .then((response)=>{
-        //         axios.get(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${userId}`)
-        //         .then((res)=>{
-        //             let ulList=document.querySelector('.user-detail')
-        //             let liToDelete=document.getElementById(res.data._id)
-        //             ulList.removeChild(liToDelete)
-        //             displayUser(res.data)
-        //         })
-        //     })
-        //     .catch((err)=>{
-        //         console.log(err)
-        //     })
-
-
-        // }else{
-       
-
-        // }
-        axios.post('http://localhost:4000/user/add-user', userObj)
-        .then((res)=>{
-            console.log('Post request!!')
-            console.log(res)
-            const user=res.data.userDetail
-            displayUser(user)      
+        if(edit==true){
+            try{
+                const postUser= await axios.post(`http://localhost:4000/edit-user/${userId}`,userObj)
+           
+               const res = await axios.get(`http://localhost:4000/edit-user/${userId}`)
+                
+                let ulList=document.querySelector('.user-detail')
+                let liToDelete=document.getElementById(res.data.data.id)
+                ulList.removeChild(liToDelete)
+                displayUser(res.data.data)
     
-        })
-        .catch((err)=>console.log(err))
+            }catch(err){
+                console.log(err)
+            }
+           
+
+        }else{
+            axios.post('http://localhost:4000/user/add-user', userObj)
+            .then((res)=>{
+                console.log('Post request!!')
+                console.log(res)
+                const user=res.data.userDetail
+                displayUser(user)      
+        
+            })
+            .catch((err)=>console.log(err))
+
+        }
+       
     }
  
 })
@@ -102,7 +102,7 @@ const editUser =async(id)=>{
         username.value=data.username
         email.value=data.email
         phone.value=data.phoneNumber
-        userId=data._id
+        userId=data.id
         edit=true
     }catch(err){
         console.log(err)
