@@ -3,22 +3,18 @@ const { randomUUID } = require('crypto');
 
 
 exports.postUser=async(req,res)=>{
-    try{
-        console.log(req.body)
-   
+    try{   
       const data= await Users.create({
            id:randomUUID(),
-           username:req.body.name,
+           username:req.body.username,
            email:req.body.email,
            phoneNumber:req.body.phoneNumber
        })
    
-       console.log(data)
        res.status(201).json({userDetail:data})
     }catch(err){
         res.status(500).json({error:err})
     }
-
 
 }
 
@@ -64,9 +60,6 @@ exports.getEditUser=async(req,res)=>{
 exports.postEditUser=async(req,res)=>{
     try{
         const id=req.params.id
-       console.log(id)
-    //    console.log(req.body)
-
       const data=await Users.findByPk(id)
       data.username=req.body.username
       data.email=req.body.email
