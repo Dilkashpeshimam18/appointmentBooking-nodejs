@@ -5,9 +5,6 @@ const { randomUUID } = require('crypto');
 exports.postUser=async(req,res)=>{
     try{
         console.log(req.body)
-        const username=req.body.name
-        const email=req.body.email
-        const phoneNumber=req.body.phoneNumber;
    
       const data= await Users.create({
            id:randomUUID(),
@@ -52,8 +49,13 @@ exports.deleteUser=async(req,res)=>{
     }
 }
 
-exports.getEditUser=(req,res)=>{
+exports.getEditUser=async(req,res)=>{
     try{
+        const id=req.params.id
+        console.log(id)
+        const data= await Users.findByPk(id)
+
+        res.status(200).json({data:data})
 
     }catch(err){
         console.log(err)

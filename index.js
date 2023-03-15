@@ -94,20 +94,19 @@ const deleteUser=async(id)=>{
    ulList.removeChild(liToDelete)
 }
 
-function editUser(id){
-    axios.get(`https://crudcrud.com/api/b70375e9719844c79f28349b5cdee3bf/appointmentBooking/${id}`)
-    .then((res)=>{
-    var data=res.data
-    username.value=data.name
-    email.value=data.email
-    phone.value=data.phoneNumber
-    userId=data._id
-    edit=true
-
-    // deleteUser(id)
-
-    })
-    .catch((err)=>{
+const editUser =async(id)=>{
+    try{
+        const res=await  axios.get(`http://localhost:4000/edit-user/${id}`)
+        console.log('get edit user', res)
+        var data=res.data.data
+        username.value=data.username
+        email.value=data.email
+        phone.value=data.phoneNumber
+        userId=data._id
+        edit=true
+    }catch(err){
         console.log(err)
-    })
+    }
+   
+     // deleteUser(id)
 }
